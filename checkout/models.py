@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 
 # Create your models here.
 
@@ -28,6 +27,13 @@ class Product (models.Model):
         return self.title
 
 
+class Customer(models.Model):
+    name = models.CharField(max_length=200)
+    phone = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    comments = models.TextField()
+
+
 class Delivery(models.Model):
     product = models.ForeignKey(Product)
     delivery_service = models.CharField(max_length=200)
@@ -37,3 +43,16 @@ class Delivery(models.Model):
     def __str__(self):
         return self.delivery_service
 
+
+class Order(models.Model):
+    order_nr = models.CharField(max_length=200)
+    product = models.ForeignKey(Product)
+    product_comments = models.TextField()
+    customer = models.ForeignKey(Customer)
+    is_delivery_info = models.BooleanField
+    delivery_service = models.ForeignKey(Delivery)
+    address = models.CharField(max_length=200)
+    delivery_comments = models.TextField()
+
+    def __str__(self):
+        return self.delivery_service
