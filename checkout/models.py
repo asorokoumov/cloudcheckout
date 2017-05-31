@@ -33,6 +33,9 @@ class Customer(models.Model):
     email = models.CharField(max_length=200)
     comments = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
 class Delivery(models.Model):
     product = models.ForeignKey(Product)
@@ -55,4 +58,4 @@ class Order(models.Model):
     delivery_comments = models.TextField()
 
     def __str__(self):
-        return self.delivery_service
+        return self.order_nr
