@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <h1>New customer</h1>
-    <form method="POST" class="step1-form">{% csrf_token %}
+    <h1>contacts</h1>
+    <form method="POST" class="step1-form">
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>

@@ -17,6 +17,13 @@
 {{product.development}}</br>
 <img src="{{product.image}}" alt="{{product}}" height="100" width="100">
 
+    <form method="POST" class="checkout-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+
 
 </body>
 </html>

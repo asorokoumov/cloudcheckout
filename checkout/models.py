@@ -50,12 +50,12 @@ class Delivery(models.Model):
 class Order(models.Model):
     order_nr = models.CharField(max_length=200)
     product = models.ForeignKey(Product)
-    product_comments = models.TextField()
-    customer = models.ForeignKey(Customer)
+    product_comments = models.TextField(blank=True, null=True)
+    customer = models.ForeignKey(Customer, blank=True, null=True)
     is_delivery_info = models.BooleanField
-    delivery_service = models.ForeignKey(Delivery)
-    address = models.CharField(max_length=200)
-    delivery_comments = models.TextField()
+    delivery_service = models.ForeignKey(Delivery, blank=True, null=True)
+    address = models.CharField(max_length=200, blank=True, null=True)
+    delivery_comments = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.order_nr
