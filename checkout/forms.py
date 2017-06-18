@@ -5,6 +5,15 @@ from django.forms.widgets import Input
 from .models import Customer, Order
 
 
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('product_comments',)
+        widgets = {
+            'product_comments': Textarea(attrs={'class': 'textarea', 'placeholder': 'Комментарий'}),
+        }
+
+
 class ContactsForm(forms.ModelForm):
     class Meta:
         model = Customer
@@ -17,18 +26,17 @@ class ContactsForm(forms.ModelForm):
         }
 
 
-class ProductForm(forms.ModelForm):
+class ProductionForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('product_comments',)
-        widgets = {
-            'product_comments': Textarea(attrs={'class': 'textarea', 'placeholder': 'Комментарий'}),
-        }
 
 
 class DeliveryForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('address',)
+
+
 
 

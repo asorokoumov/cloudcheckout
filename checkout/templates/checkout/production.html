@@ -3,7 +3,7 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>Checkout Success</title>
+  <title>Производство</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
@@ -15,17 +15,23 @@
       <a href="#" class="logo">
         <img src="{% static 'img/logo.svg' %}" width="57" alt="">
       </a>
+
+      <div class="title">Производство</div>
+      <div class="subtitle">Производство обычно занимает 3-5 дней. Мы можем связаться с вами после изготовления и договориться о доставке.</div>
     </header>
 
-    <div class="content">
+    <div class="content  content--without-center">
       <div class="content-wrap">
-        <div class="check">
-          <img src="{% static 'img/check.svg' %}" alt="">
-        </div>
+          <form method="POST" >
+            {% csrf_token %}
+            <div class="input-wrap">
+              <button type="submit"  name="later" class="btn">Договоримся потом</button>
+            </div>
 
-        <div class="title  title-content">Спасибо за заказ!</div>
-        <div class="subtitle">Мы свяжемся с вами в ближайшее время для подтверждения заказа.</div>
-        <p>Номер заказа: X172341239</p>
+            <div class="input-wrap">
+              <button type="submit" name="now" class="btn">Заполню все сейчас</button>
+            </div>
+          </form>
 
       </div>
     </div>

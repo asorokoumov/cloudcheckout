@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from checkout.models import Product, Seller, Delivery, Order
-from .forms import ContactsForm, ProductForm, DeliveryForm
+from .forms import ContactsForm, ProductForm, DeliveryForm, ProductionForm
 from django.shortcuts import redirect
 
 
@@ -36,7 +36,7 @@ def checkout_contacts(request, order_nr):
             order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
             order.customer = customer
             order.save()
-            return redirect('checkout_delivery', order_nr=order.order_nr)
+            return redirect('checkout_production', order_nr=order.order_nr)
 
     else:
         form = ContactsForm()
@@ -45,7 +45,7 @@ def checkout_contacts(request, order_nr):
 
 def checkout_delivery(request, order_nr):
     if request.method == "POST":
-        form = DeliveryForm(request.POST)
+        form = ProductionForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
@@ -53,8 +53,34 @@ def checkout_delivery(request, order_nr):
             order.save()
             return redirect('checkout_success', order_nr=order.order_nr)
     else:
-        form = DeliveryForm()
+        form = ProductionForm()
     return render(request, 'checkout/delivery.html', {'form': form})
+
+
+def checkout_production(request, order_nr):
+    if request.method == "POST":
+        print(request.POST)
+
+        form = DeliveryForm(request.POST)
+        print(form)
+        if form.is_valid():
+            print('valid')
+
+            order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
+            if 'now' in request.POST:
+                print('now')
+
+                return redirect('checkout_delivery', order_nr=order.order_nr)
+            elif 'later' in request.POST:
+                print('later')
+
+                return redirect('checkout_success', order_nr=order.order_nr)
+            else:
+                print('else')
+
+    else:
+        form = DeliveryForm()
+    return render(request, 'checkout/production.html', {'form': form})
 
 
 def checkout_success(request, order_nr):
