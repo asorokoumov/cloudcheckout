@@ -1,0 +1,199 @@
+@import "fonts"
+@import "vars"
+@import "reset"
+
+*::-webkit-input-placeholder
+  color: #fff
+  opacity: .5
+
+*:-moz-placeholder
+  color: #fff
+  opacity: .5
+
+*::-moz-placeholder
+  color: #fff
+  opacity: .5
+
+*:-ms-input-placeholder
+  color: #fff
+  opacity: .5
+
+html
+  box-sizing: border-box
+
+*, *:before, *:after
+  box-sizing: inherit
+
+html
+  // min-height: 100%
+  @media (max-width: 767px) and (orientation: landscape)
+    height: auto
+
+body
+  overflow: hidden
+  display: flex
+  flex-direction: column
+  margin: 0
+  padding: 0
+  font-size: 14px
+  line-height: 19px
+  font-weight: 500
+  min-width: 320px
+  height: 100vh
+  position: relative
+  font-family: 'Roboto', sans-serif
+  opacity: 1
+  background: linear-gradient(to bottom, #5bb1d2, #7ecae4)
+  color: #fff
+
+  @media (max-width: 767px) and (orientation: landscape)
+    height: auto !important
+    overflow-y: auto
+
+h2
+  font-size: 16px
+  font-weight: 700
+
+a
+  display: block
+  text-decoration: underline
+  color: #fff
+  outline: none
+  transition: opacity .15s ease
+
+  &:hover,
+  &:focus
+    color: #fff
+    text-decoration: underline
+    outline: none
+
+  &:active
+    opacity: .6
+
+.bottom-link
+  margin-top: 15px
+  margin-bottom: 5px
+
+li, ol
+  list-style: none
+
+p
+  font-size: 14px
+  font-weight: 500
+  line-height: 19px
+  color: #fff
+  margin-top: 10px
+  margin-bottom: 6px
+
+.flex-wrap
+  flex-grow: 1
+  padding-left: 20px
+  padding-right: 20px
+  display: flex
+  text-align: center
+  flex-direction: column
+
+  .content
+    display: flex
+    flex-grow: 1
+    flex-direction: column
+    justify-content: center
+
+    &--without-center
+      flex-grow: 0
+      justify-content: flex-start
+      margin-top: 50px
+
+.logo
+  display: flex
+  justify-content: center
+  margin-top: 0
+  padding-top: 3vh
+  padding-bottom: 2vh
+  text-align: center
+
+  img
+    display: inline-block
+    vertical-align: middle
+
+.title
+  text-align: center
+  font-size: 16px
+  font-weight: 700
+  line-height: 1.3125
+  margin-bottom: 4px
+
+  &-content
+    margin-bottom: 10px
+
+.subtitle
+  max-width: 220px
+  margin: 0 auto
+  margin-bottom: 10px
+  color: rgba(255, 255, 255, .6)
+  font-weight: 400
+  line-height: 19px
+
+.mb20
+  margin-bottom: 20px
+
+.or
+  display: inline-block
+  padding-top: 8px
+  margin-bottom: 20px
+  font-size: 12px
+  line-height: 16px
+  color: rgba(255, 255, 255, .65)
+  position: relative
+  text-transform: uppercase
+
+  &:before,
+  &:after
+    content: ''
+    position: absolute
+    width: 10px
+    top: 16px
+    height: 2px
+    background-color: rgba(255, 255, 255, 0.35)
+
+  &:before
+    left: -16px
+
+  &:after
+    right: -16px
+
+
+.check
+  margin: 0 auto
+  margin-bottom: 30px
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 120px
+  height: 120px
+  border-radius: 50%
+  border: solid 2px rgba(255, 255, 255, 0.25)
+
+.summary
+
+  &-item
+    margin-bottom: 3vh
+
+  &-title
+    font-size: 14px
+    line-height: 19px
+    max-width: 220px
+    margin: 0 auto
+    color: rgba(255, 255, 255, .6)
+    margin-bottom: 5px
+    font-weight: 400
+
+  &-content
+    font-weight: 700
+    line-height: 19px
+    color: #fff
+    margin-bottom: 6px
+
+@import "input"
+@import "product"
+@import "media" // Всегда в конце

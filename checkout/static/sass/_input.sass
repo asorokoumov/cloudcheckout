@@ -1,0 +1,196 @@
+input, button, textarea, select, option
+  font-family: 'Roboto', sans-serif
+  font-weight: 500
+
+input, textarea
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+
+.input-wrap
+  position: relative
+  margin-bottom: 10px
+
+  &.has-error
+    .input
+      border-color: #f21f50
+
+.input
+  width: 100%
+  border-radius: 100px
+  background-color: rgba(26, 63, 72, 0.15)
+  color: #fff
+  height: 38px
+  border: 2px solid transparent
+  padding-top: 7px
+  padding-bottom: 8px
+  padding-left: 16px
+  padding-right: 16px
+  font-size: 14px
+  line-height: 19px
+  font-weight: 500
+  outline: none
+  transition: border-color .15s ease
+
+  &:focus
+    border-color: rgba(255, 255, 255, .6)
+
+.select
+  width: 100%
+  border-radius: 100px
+  background-color: rgba(26, 63, 72, 0.15)
+  color: #fff
+  height: 38px
+  border: 2px solid transparent
+  padding-top: 7px
+  padding-bottom: 8px
+  padding-left: 16px
+  padding-right: 16px
+  font-size: 14px
+  font-weight: 500
+  line-height: 19px
+  font-weight: 500
+  outline: none
+  -webkit-appearance: none
+  -moz-appearance: none
+  background-image: url(../img/triangle.svg)
+  background-position: 94% 50%
+  background-repeat: no-repeat
+
+  transition: border-color .15s ease
+
+  &:focus
+    border-color: rgba(255, 255, 255, .6)
+
+  &:required:invalid
+    color: rgba(255, 255, 255, .5)
+
+[hidden]
+  display: none
+
+.textarea
+  resize: none
+  width: 100%
+  border-radius: 19px
+  background-color: rgba(26, 63, 72, 0.15)
+  color: #fff
+  height: 38px
+  border: 2px solid transparent
+  padding-top: 7px
+  padding-bottom: 8px
+  padding-left: 16px
+  padding-right: 16px
+  font-size: 14px
+  font-weight: 500
+  line-height: 19px
+  font-weight: 500
+  outline: none
+
+  transition: border-color .15s ease
+
+  &:focus
+    border-color: rgba(255, 255, 255, .6)
+
+.btn
+  display: block
+  width: 100%
+  height: 38px
+  line-height: 38px
+  text-align: center
+  border-radius: 100px
+  background-color: #fff
+  border: none
+  padding-top: 0
+  padding-bottom: 0
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), inset none
+  color: #49b3d7
+  outline: none
+  text-decoration: none !important
+  transition: opacity .15s ease
+
+  &:active,
+  &:focus
+    text-decoration: none
+
+  &:active
+    opacity: .6
+
+  &:disabled
+    opacity: .4
+
+  &-bare
+    border: solid 2px rgba(255, 255, 255, 0.25)
+    color: #fff
+    line-height: 34px
+    background: transparent
+    text-decoration: none
+
+  &-orange
+    background-color: #ff8062
+    color: #fff
+
+  &-blue
+    background-color: #617db9
+    color: #fff
+
+  &-darkblue
+    background-color: #708bad
+    color: #fff
+
+.tooltip
+  position: absolute
+  width: calc(100% - 40px)
+  left: 0
+  right: 0
+  margin: 0 auto
+  border-radius: 5px
+  background-color: #fff
+  box-shadow: 0 3px 14px 0 rgba(0, 0, 0, 0.15)
+  text-align: left
+  z-index: 10
+  font-size: 13px
+  line-height: 16px
+  color: #f21f50
+  bottom: 0
+  opacity: 0
+  visibility: hidden
+  transition: bottom .25s ease, opacity .25s ease, visibility .25s ease
+
+  &--visible
+    bottom: 30px
+    visibility: visible
+    opacity: 1
+
+  &-message
+    padding: 10px
+    padding-right: 30px
+    border-bottom: 1px solid #ececec
+
+  &-close
+    position: absolute
+    right: 10px
+    top: 10px
+    width: 10px
+    height: 10px
+    background: url(../img/cross.svg) no-repeat
+
+.tooltip-char
+  display: flex
+  align-items: center
+  justify-content: center
+
+  width: 28px
+  height: 28px
+  font-weight: 500
+  font-size: 18px
+  color: #fff
+  border-radius: 50%
+  border: solid 2px rgba(255, 255, 255, 0.25)
+
+  &-wrap
+    position: absolute
+    z-index: 2
+    top: 0
+    right: 0px
+    padding-top: 5px
+    padding-right: 5px
