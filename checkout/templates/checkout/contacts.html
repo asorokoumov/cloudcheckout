@@ -1,18 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load staticfiles %}
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h1>contacts</h1>
-    <form method="POST" class="step1-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+  <meta charset="utf-8">
+  <title>Как с вами связаться?</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
 </head>
 <body>
+  <div class="flex-wrap">
+    <header class="header">
+      <a href="#" class="logo">
+        <img src="{% static 'img/logo.svg' %}" width="57" alt="">
+      </a>
 
+      <div class="title  title-content">Как с вами связаться?</div>
+      <div class="subtitle">Шаг 1 из 2</div>
+    </header>
+
+    <div class="content">
+      <div class="content-wrap">
+        <div id="email" class="tooltip">
+          <div class="tooltip-message">
+            Email
+          </div>
+          <div class="tooltip-close"></div>
+        </div>
+
+        <div id="name" class="tooltip">
+          <div class="tooltip-message">
+            Имя
+          </div>
+          <div class="tooltip-close"></div>
+        </div>
+
+        <div id="tel" class="tooltip">
+          <div class="tooltip-message">
+            Телефон
+          </div>
+          <div class="tooltip-close"></div>
+        </div>
+
+      <form method="POST" class="step1-form">
+        {% csrf_token %}
+        <div class="input-wrap">
+            {{ form.email }}
+          <div class="tooltip-char-wrap">
+            <div class="tooltip-char" data-popup="email">?</div>
+          </div>
+        </div>
+
+        <div class="input-wrap">
+            {{ form.name }}
+          <div class="tooltip-char-wrap">
+            <div class="tooltip-char" data-popup="name">?</div>
+          </div>
+        </div>
+
+        <div class="input-wrap">
+            {{ form.phone }}
+          <div class="tooltip-char-wrap">
+            <div class="tooltip-char" data-popup="tel">?</div>
+          </div>
+        </div>
+
+        <div class="input-wrap">
+            {{ form.comments }}
+        </div>
+
+        <div class="input-wrap">
+          <button class="btn" type="submit">Далее</button>
+        </div>
+
+        <div class="input-wrap">
+          <a href="#" class="btn  btn-bare" >У меня уже есть аккаунт</a>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/viewport-units-buggyfill.js' %}"></script>
+  <script>window.viewportUnitsBuggyfill.init();</script>
+  <script src="{% static 'js/scripts.min.js' %}"></script>
 </body>
 </html>
-
-
