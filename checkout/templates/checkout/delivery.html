@@ -1,18 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load staticfiles %}
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h1>delivery</h1>
-    <form method="POST" class="step1-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+  <meta charset="utf-8">
+  <title>Доставка Default</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
 </head>
 <body>
+  <div class="flex-wrap">
+    <header class="header">
+      <a href="#" class="logo">
+        <img src="{% static 'img/logo.svg' %}" width="57" alt="">
+      </a>
 
+      <div class="title  title-content">Доставка</div>
+      <div class="subtitle">Шаг 2 из 2</div>
+    </header>
+
+    <div class="content  content--without-center">
+      <div class="content-wrap">
+        <form method="POST">
+        {% csrf_token %}
+        <div class="input-wrap">
+          <select id="delivery" type="email" class="select" required>
+            <option value="" disabled selected hidden>Способ доставки</option>
+            <option value="courier">Курьерская доставка</option>
+            <option value="pochta">Почта России</option>
+            <option value="self">Самовывоз</option>
+          </select>
+        </div>
+
+        <div class="delivery-fields  courier" style="display: none;">
+          <div class="input-wrap">
+            <input type="text" class="input" placeholder="Адрес">
+          </div>
+
+          <div class="input-wrap">
+            <textarea class="textarea" placeholder="Комментарий"></textarea>
+          </div>
+
+          <div class="subtitle  mb20">Мы позвоним вам и уточним сроки и стоймость доставки по вашему адресу</div>
+        </div>
+
+        <div class="delivery-fields  pochta" style="display: none;">
+          <div class="input-wrap">
+            <input type="text" class="input" placeholder="Адрес">
+          </div>
+
+          <div class="input-wrap">
+            <textarea class="textarea" placeholder="Комментарий"></textarea>
+          </div>
+
+          <div class="subtitle  mb20">Мы позвоним вам и уточним сроки и стоймость доставки по вашему адресу</div>
+        </div>
+
+        <div class="delivery-fields  self" style="display: none;">
+          <div class="summary">
+            <div class="summary-item">
+              <div class="summary-title">Адрес:</div>
+              <div class="summary-content">Москва, Летниковская ул. 10с5</div>
+              <a href="#">Посмотреть на Яндекс.Картах</a>
+            </div>
+
+            <div class="summary-item">
+              <div class="summary-title">График работы:</div>
+              <div class="summary-content">с 10:00 до 19:00</div>
+            </div>
+
+            <div class="summary-item">
+              <div class="summary-title">Стоимость:</div>
+              <div class="summary-content">250 рублей</div>
+            </div>
+
+            <div class="summary-item">
+              <div class="summary-title">Мы позвоним вам и согласуем удобную дату для самовывоза</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="input-wrap">
+          <button type="submit" class="btn" disabled>Оформить заказ</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/viewport-units-buggyfill.js' %}"></script>
+  <script>window.viewportUnitsBuggyfill.init();</script>
+  <script src="{% static 'js/scripts.min.js' %}"></script>
 </body>
 </html>
-
-

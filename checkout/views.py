@@ -49,7 +49,7 @@ def checkout_delivery(request, order_nr):
         if form.is_valid():
             data = form.cleaned_data
             order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
-            order.address = data['address']
+        #   order.address = data['address']
             order.save()
             return redirect('checkout_success', order_nr=order.order_nr)
     else:
@@ -59,25 +59,13 @@ def checkout_delivery(request, order_nr):
 
 def checkout_production(request, order_nr):
     if request.method == "POST":
-        print(request.POST)
-
         form = DeliveryForm(request.POST)
-        print(form)
         if form.is_valid():
-            print('valid')
-
             order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
             if 'now' in request.POST:
-                print('now')
-
                 return redirect('checkout_delivery', order_nr=order.order_nr)
             elif 'later' in request.POST:
-                print('later')
-
                 return redirect('checkout_success', order_nr=order.order_nr)
-            else:
-                print('else')
-
     else:
         form = DeliveryForm()
     return render(request, 'checkout/production.html', {'form': form})
