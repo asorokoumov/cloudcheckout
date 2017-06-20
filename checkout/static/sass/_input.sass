@@ -74,7 +74,7 @@ input, textarea
   border-radius: 19px
   background-color: rgba(26, 63, 72, 0.15)
   color: #fff
-  height: 38px
+  min-height: 76px
   border: 2px solid transparent
   padding-top: 7px
   padding-bottom: 8px
@@ -85,6 +85,10 @@ input, textarea
   line-height: 19px
   font-weight: 500
   outline: none
+
+  @media (max-height: 480px)
+    min-height: auto
+    height: 38px
 
   transition: border-color .15s ease
 
