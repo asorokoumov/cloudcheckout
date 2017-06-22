@@ -6,9 +6,9 @@ from django.db import models
 class Seller (models.Model):
     login = models.CharField(max_length=200)
     password = models.CharField(max_length=200)
-    instagram = models.CharField(max_length=200)
+    instagram = models.CharField(max_length=200, blank=True, null=True)
     email = models.CharField(max_length=200)
-    phone = models.CharField(max_length=200)
+    phone = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.login
