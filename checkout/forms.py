@@ -38,5 +38,3 @@ class DeliveryForm(forms.ModelForm):
         fields = ('address',)
 
 
-
-
