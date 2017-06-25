@@ -122,14 +122,11 @@ def seller_register(request):
             else:
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
-                Seller(login=username, password=password, email=email).save()
+                Seller(login=username, email=email).save()
                 auth.login(request, user)
                 return redirect('seller_space')
         else:
             return render(request, 'checkout/seller_register.html')
-
-            # user = User.objects.create_user(username, 'lennon@thebeatles.com', password)
-            # user = auth.authenticate(username=username, password=password)
 
 
 

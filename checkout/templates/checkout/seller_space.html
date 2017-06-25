@@ -1,83 +1,108 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-
 <html lang="en" >
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Seller Space</title>
-        <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <!-- Custom styles for this template -->
-        <link rel="stylesheet" href="{% static 'css/seller_space.css' %}">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=900px">
-    </head>
-    <body>
-        <div class="body-inner">
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="MainController">
-                <div class="container">
-                    <div class="container-fluid">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                    data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand" ng-href="#" >Incart</a>
-                        </div>
-
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav menu" ng-if="isAuthenticated()">
-                                <li ng-class="menuClass('orders')" check-scope="r_orders">
-                                    <a ui-sref="orders({page: 1, sort: '-createdAt', limit: defaultLimit})">
-                                        Заказы<span class="sr-only"></span>
-                                    </a>
-                                </li>
-                                <li ng-class="menuClass('shipments')" check-scope="r_shipments">
-                                    <a ui-sref="shipments({page: 1, filter: 'direction=in', limit: defaultLimit})">
-                                        Доставка<span class="sr-only"></span>
-                                    </a>
-                                </li>
-                                <li ng-class="menuClass('goods')" check-scope="r_goods">
-                                    <a ui-sref="goods(defaultParams)">
-                                        Товары<span class="sr-only"></span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                            <ul class="nav navbar-right navbar-nav menu">
-                                <li><a href="#">Профиль</a></li>
-                                <li><a href="logout">Выход ({{username}})</a></li>
-                            </ul>
-
-                        </div>
-                        <!-- /.navbar-collapse -->
-                    </div>
-                    <!-- /.container-fluid -->
-                </div>
-            </nav>
-            <div class="container" id="content">
-                <div class="container-inner">
-                    <div></div>
-                </div>
-                <footer ng-controller="MainController">
-                    <div class="container">
-                        <ul class="list-inline">
-                            <li>&copy; All rights reserved. 2017</li>
-                        </ul>
-                    </div>
-                </footer>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>Seller Space</title>
+      <!-- Bootstrap core CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <!-- Custom styles for this template -->
+      <link rel="stylesheet" href="{% static 'css/seller_space.css' %}">
+      <meta name="description" content="">
+      <meta name="viewport" content="width=900px">
+   </head>
+   <body>
+      <div class="body-inner">
+         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+               <div class="container-fluid">
+                  <!-- Brand and toggle get grouped for better mobile display -->
+                  <div class="navbar-header">
+                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target=".navbar-collapse">
+                     <span class="sr-only">Toggle navigation</span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     </button>
+                     <a class="navbar-brand" href="#" >Incart</a>
+                  </div>
+                  <!-- Collect the nav links, forms, and other content for toggling -->
+                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                     <ul class="nav navbar-nav menu">
+                        <li>
+                           <a href="#">Заказы</a>
+                        </li>
+                        <li>
+                           <a href="#">Доставка</a>
+                        </li>
+                        <li>
+                           <a href="#">Товары</a>
+                        </li>
+                     </ul>
+                     <ul class="nav navbar-right navbar-nav menu">
+                        <li><a href="#">Профиль</a></li>
+                        <li><a href="logout">Выход ({{username}})</a></li>
+                     </ul>
+                  </div>
+                  <!-- /.navbar-collapse -->
+               </div>
+               <!-- /.container-fluid -->
             </div>
-        </div>
-        <div class="loading-overlay" data-loading></div>
+         </nav>
+         <div class="container" id="content">
+            <div class="container-inner">
+               <div>
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th>Картинка</th>
+                           <th>Название</th>
+                           <th>Цена</th>
+                           <th>Ссылка</th>
+                           <th>Действия</th>
 
-    </body>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td><img src="http://odressa.ru/assets/images/black.jpg" alt="Smiley face" height="90"></td>
+                           <td>Черная галстук-бабочка</td>
+                           <td>800 рублей</td>
+                           <td><a href="http://sorokoumov.pythonanywhere.com/product/pufik/">http://incart.com/product/pufik/</a></td>
+                           <td><button type="button" class="btn btn-sm btn-primary">Редактировать</button></td>
+                        </tr>
+                        <tr>
+                           <td><img src="http://odressa.ru/assets/images/black.jpg" alt="Smiley face" height="90"></td>
+                           <td>Черная галстук-бабочка</td>
+                           <td>800 рублей</td>
+                           <td><a href="http://sorokoumov.pythonanywhere.com/product/pufik/">http://incart.com/product/pufik/</a></td>
+                           <td><button type="button" class="btn btn-sm btn-primary">Редактировать</button></td>
+</tr>
+                        <tr>
+                           <td><img src="http://odressa.ru/assets/images/black.jpg" alt="Smiley face" height="90"></td>
+                           <td>Черная галстук-бабочка</td>
+                           <td>800 рублей</td>
+                           <td><a href="http://sorokoumov.pythonanywhere.com/product/pufik/">http://incart.com/product/pufik/</a></td>
+                           <td><button type="button" class="btn btn-sm btn-primary">Редактировать</button></td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <button type="button" class="btn btn-md btn-success">Добавить товар</button>
+
+               </div>
+            </div>
+            <footer>
+               <div class="container">
+                  <ul class="list-inline">
+                     <li>&copy; All rights reserved. 2017</li>
+                  </ul>
+               </div>
+            </footer>
+         </div>
+      </div>
+      <div class="loading-overlay" data-loading></div>
+   </body>
 </html>
-
