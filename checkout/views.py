@@ -4,6 +4,7 @@ from .forms import ContactsForm, ProductForm, DeliveryForm, ProductionForm
 from django.shortcuts import redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
+import random, string
 
 
 # Create your views here.
@@ -106,8 +107,8 @@ def seller_logout(request):
 
 
 def seller_register(request):
-    if auth.get_user(request).username:
-        return render(request, 'checkout/seller_space.html', {'username': auth.get_user(request).username})
+    if not auth.get_user(request).username:
+        return render(request, 'checkout/seller_register.html')
     else:
         if request.method == "POST":
             username = request.POST.get('username', '')
@@ -126,7 +127,95 @@ def seller_register(request):
                 auth.login(request, user)
                 return redirect('seller_space')
         else:
-            return render(request, 'checkout/seller_register.html')
+            return render(request, 'checkout/seller_space.html', {'username': auth.get_user(request).username})
 
+
+def seller_products(request):
+    if auth.get_user(request).username:
+        seller = Seller.objects.get(login=auth.get_user(request).username)
+        products = Product.objects.filter(seller=seller)
+        return render(request, 'checkout/seller_products.html', {'username': auth.get_user(request).username,
+                                                                 'products': products})
+    else:
+        return redirect('seller_login')
+
+
+def seller_products_delete(request, product_link):
+    if auth.get_user(request).username:
+        seller = Seller.objects.get(login=auth.get_user(request).username)
+        products = Product.objects.filter(seller=seller, link=product_link)
+        if products:
+            products.delete()
+        return redirect('seller_products')
+
+    else:
+        return redirect('seller_login')
+
+
+def seller_products_edit(request, product_link):
+
+    if not auth.get_user(request).username:
+        return redirect('seller_login')
+    else:
+        if request.method == "POST":
+            title = request.POST.get('title', '')
+            description = request.POST.get('description', '')
+            price = request.POST.get('price', '')
+            link = request.POST.get('link', '')
+            development = request.POST.get('development', '')
+
+            product = Product.objects.get(link=link)
+
+#TODO fix case without updated image
+            if request.FILES['image-file']:
+                file = request.FILES['image-file']
+                extension = file.name.split(".")[-1].lower()
+                file.name = link + '.' + extension
+                product.image = file
+
+            product.title = title
+            product.description = description
+            product.price = price
+            product.development = development
+
+            product.save()
+            return redirect('seller_products')
+        else:
+            seller = Seller.objects.get(login=auth.get_user(request).username)
+            product = Product.objects.get(seller=seller, link=product_link)
+            return render(request, 'checkout/seller_products_edit.html', {'username': auth.get_user(request).username,
+                          'product': product})
+
+
+def generate_product_link(username):
+    size = 4
+    chars = string.ascii_lowercase + string.digits
+    seller = Seller.objects.get(login=username)
+    return str(seller.id)+''.join(random.choice(chars) for _ in range(size))
+
+
+def seller_products_add(request):
+    if not auth.get_user(request).username:
+        return redirect('seller_login')
+    else:
+        if request.method == "POST":
+            title = request.POST.get('title', '')
+            description = request.POST.get('description', '')
+            price = request.POST.get('price', '')
+            link = request.POST.get('link', '')
+            development = request.POST.get('development', '')
+            file = request.FILES['image-file']
+            extension = file.name.split(".")[-1].lower()
+            seller = Seller.objects.get(login=auth.get_user(request).username)
+            file.name = link+'.'+extension
+
+            product = Product(seller=seller, title=title, description=description, price=price, link=link, image=file,
+                              development=development)
+            product.save()
+            return redirect('seller_products')
+        else:
+            return render(request, 'checkout/seller_products_add.html',
+                      {'username': auth.get_user(request).username,
+                       'link': generate_product_link(auth.get_user(request).username)})
 
 

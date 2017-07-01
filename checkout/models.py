@@ -18,7 +18,7 @@ class Product (models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     price = models.FloatField()
-    image = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='product_images')
     link = models.CharField(max_length=200)
     development = models.CharField(max_length=200)
 
