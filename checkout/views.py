@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from checkout.models import Product, Seller, Delivery, Order
 from .forms import ContactsForm, ProductForm, DeliveryForm, ProductionForm
