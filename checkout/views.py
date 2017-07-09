@@ -109,10 +109,13 @@ def seller_logout(request):
 
 
 def seller_register(request):
-    if not auth.get_user(request).username:
-        return render(request, 'checkout/seller_register.html')
+    print('1')
+    if auth.get_user(request).username:
+        return redirect('seller_space')
     else:
+        print('2')
         if request.method == "POST":
+            print('3')
             username = request.POST.get('username', '')
             email = request.POST.get('email', '')
             password = request.POST.get('password', '')
@@ -123,13 +126,14 @@ def seller_register(request):
                 return render(request, 'checkout/seller_register.html',
                               {'register_error': 'Пользователь с таким email уже существует'})
             else:
+                print('4')
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
                 Seller(login=username, email=email).save()
                 auth.login(request, user)
                 return redirect('seller_space')
         else:
-            return render(request, 'checkout/seller_space.html', {'username': auth.get_user(request).username})
+            return render(request, 'checkout/seller_register.html')
 
 
 def seller_products(request):

@@ -22,7 +22,7 @@
 
     <div class="container">
 
-      <form class="form-signin" action="/seller/login" method="POST">
+      <form class="form-signin" action="/seller/login/" method="POST">
               {% csrf_token %}
 
         <h2 class="form-signin-heading">Добро пожаловать</h2>
@@ -39,7 +39,7 @@
           <a href="#">Не могу войти</a>
         </div>
         <div>
-          <a href="register">Зарегистрироваться</a>
+          <a href="/seller/register/">Зарегистрироваться</a>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
       </form>
