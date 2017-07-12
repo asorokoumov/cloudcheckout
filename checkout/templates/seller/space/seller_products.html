@@ -1,0 +1,30 @@
+{% extends "seller/space/base_seller_space.html" %}
+
+{% block content %}
+   <table class="table table-striped">
+      <thead>
+         <tr>
+            <th>Картинка</th>
+            <th>Название</th>
+            <th>Цена</th>
+            <th>Ссылка</th>
+            <th>Действия</th>
+
+         </tr>
+      </thead>
+      <tbody>
+      {% for product in products%}
+         <tr>
+            <td><img src="{{product.image.url}}" alt="Smiley face" style="max-width:100px; width:100%"></td>
+            <td>{{product.title}}</td>
+            <td>{{product.price}} рублей</td>
+            <td><a href="http://sorokoumov.pythonanywhere.com/product/{{product.link}}/">http://sorokoumov.pythonanywhere.com/product/{{product.link}}/</a></td>
+            <td><a class="btn btn-sm btn-primary" href="/seller/products/edit/{{product.link}}">Редактировать</a></br>
+               <a class="btn btn-sm btn-danger" href="/seller/products/delete/{{product.link}}">Удалить</a></td>
+         </tr>
+      {% endfor %}
+      </tbody>
+   </table>
+   <a class="btn btn-md btn-success" href="/seller/products/add">Добавить товар</a>
+
+{% endblock %}

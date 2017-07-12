@@ -84,7 +84,7 @@ def checkout_success(request, order_nr):
 
 def seller_space(request):
     if auth.get_user(request).username:
-        return render(request, 'checkout/seller_space.html', {'username': auth.get_user(request).username})
+        return render(request, 'seller/space/seller_space.html', {'username': auth.get_user(request).username})
     else:
         return redirect('seller_login')
 
@@ -98,14 +98,14 @@ def seller_login(request):
             auth.login(request, user)
             return redirect('seller_space')
         else:
-            return render(request, 'checkout/seller_login.html', {'login_error': 'Пользователь не найден'})
+            return render(request, 'seller/seller_login.html', {'login_error': 'Пользователь не найден'})
     else:
-        return render(request, 'checkout/seller_login.html')
+        return render(request, 'seller/seller_login.html')
 
 
 def seller_logout(request):
     auth.logout(request)
-    return render(request, 'checkout/seller_login.html')
+    return render(request, 'seller/seller_login.html')
 
 
 def seller_register(request):
@@ -121,9 +121,9 @@ def seller_register(request):
             password = request.POST.get('password', '')
 
             if User.objects.filter(username=username):
-                return render(request, 'checkout/seller_register.html', {'register_error': 'Пользователь уже существует'})
+                return render(request, 'seller/seller_register.html', {'register_error': 'Пользователь уже существует'})
             elif User.objects.filter(email=email):
-                return render(request, 'checkout/seller_register.html',
+                return render(request, 'seller/seller_register.html',
                               {'register_error': 'Пользователь с таким email уже существует'})
             else:
                 print('4')
@@ -133,14 +133,14 @@ def seller_register(request):
                 auth.login(request, user)
                 return redirect('seller_space')
         else:
-            return render(request, 'checkout/seller_register.html')
+            return render(request, 'seller/seller_register.html')
 
 
 def seller_products(request):
     if auth.get_user(request).username:
         seller = Seller.objects.get(login=auth.get_user(request).username)
         products = Product.objects.filter(seller=seller)
-        return render(request, 'checkout/seller_products.html', {'username': auth.get_user(request).username,
+        return render(request, 'seller/space/seller_products.html', {'username': auth.get_user(request).username,
                                                                  'products': products})
     else:
         return redirect('seller_login')
@@ -189,7 +189,7 @@ def seller_products_edit(request, product_link):
         else:
             seller = Seller.objects.get(login=auth.get_user(request).username)
             product = Product.objects.get(seller=seller, link=product_link)
-            return render(request, 'checkout/seller_products_edit.html', {'username': auth.get_user(request).username,
+            return render(request, 'seller/space/seller_products_edit.html', {'username': auth.get_user(request).username,
                           'product': product})
 
 
@@ -220,8 +220,8 @@ def seller_products_add(request):
             product.save()
             return redirect('seller_products')
         else:
-            return render(request, 'checkout/seller_products_add.html',
-                      {'username': auth.get_user(request).username,
-                       'link': generate_product_link(auth.get_user(request).username)})
+            return render(request, 'seller/space/seller_products_add.html',
+                          {'username': auth.get_user(request).username,
+                           'link': generate_product_link(auth.get_user(request).username)})
 
 
