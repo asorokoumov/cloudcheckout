@@ -98,32 +98,29 @@ def seller_login(request):
             auth.login(request, user)
             return redirect('seller_space')
         else:
-            return render(request, 'seller/seller_login.html', {'login_error': 'Пользователь не найден'})
+            return render(request, 'seller/auth/seller_login.html', {'login_error': 'Пользователь не найден'})
     else:
-        return render(request, 'seller/seller_login.html')
+        return render(request, 'seller/auth/seller_login.html')
 
 
 def seller_logout(request):
     auth.logout(request)
-    return render(request, 'seller/seller_login.html')
+    return redirect('seller_login')
 
 
 def seller_register(request):
-    print('1')
     if auth.get_user(request).username:
         return redirect('seller_space')
     else:
-        print('2')
         if request.method == "POST":
-            print('3')
             username = request.POST.get('username', '')
             email = request.POST.get('email', '')
             password = request.POST.get('password', '')
 
             if User.objects.filter(username=username):
-                return render(request, 'seller/seller_register.html', {'register_error': 'Пользователь уже существует'})
+                return render(request, 'seller/auth/seller_register.html', {'register_error': 'Пользователь уже существует'})
             elif User.objects.filter(email=email):
-                return render(request, 'seller/seller_register.html',
+                return render(request, 'seller/auth/seller_register.html',
                               {'register_error': 'Пользователь с таким email уже существует'})
             else:
                 print('4')
@@ -133,7 +130,9 @@ def seller_register(request):
                 auth.login(request, user)
                 return redirect('seller_space')
         else:
-            return render(request, 'seller/seller_register.html')
+            return render(request, 'seller/auth/seller_register.html')
+
+
 
 
 def seller_products(request):
