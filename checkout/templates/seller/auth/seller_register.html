@@ -1,26 +1,19 @@
 {% extends "seller/auth/base_seller_auth.html" %}
-
 {% block content %}
 
-      <form class="form-signin" action="/seller/register/" method="POST">
+    <form class="register-form" action="/seller/register/" method="POST">
               {% csrf_token %}
-
-        <h2 class="form-signin-heading">Регистрация</h2>
-        <label for="username" class="sr-only">Логин</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Логин" required>
-        <label for="email" class="sr-only">Email</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
-        <label for="password" class="sr-only">Пароль</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
-        {% if register_error %}
+      <input type="text" id="username" name="username" placeholder="Имя"/>
+      <input type="password" id="password" name="password" placeholder="Пароль"/>
+      <input type="email" id="email" name="email" placeholder="Email адрес"/>
+       {% if register_error %}
           <div style="color:red">
             {{register_error}}
         </div>
         {% endif %}
-        <div>
-          <a href="/seller/login/">У меня уже есть аккаунт</a>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
-      </form>
+      <button type="submit">Создать</button>
+      <p class="message">Уже зарегистрированы? <a href="/seller/login/">Войти</a></p>
+    </form>
+
 {% endblock %}
 
