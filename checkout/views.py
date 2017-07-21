@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
 import random, string
+from django.core.mail import EmailMessage
 
 
 # Create your views here.
@@ -77,8 +78,14 @@ def checkout_production(request, order_nr):
     return render(request, 'checkout/production.html', {'form': form})
 
 
+def send_order_details():
+    email = EmailMessage('Hello', 'World', to=['sorokoumov.anton@gmail.com'])
+    email.send()
+
+
 def checkout_success(request, order_nr):
     order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
+    send_order_details()
     return render(request, 'checkout/success.html', {'order': order})
 
 
@@ -116,7 +123,6 @@ def seller_register(request):
             username = request.POST.get('username', '')
             email = request.POST.get('email', '')
             password = request.POST.get('password', '')
-
             if User.objects.filter(username=username):
                 return render(request, 'seller/auth/seller_register.html', {'register_error': 'Пользователь уже существует'})
             elif User.objects.filter(email=email):
@@ -131,8 +137,6 @@ def seller_register(request):
                 return redirect('seller_space')
         else:
             return render(request, 'seller/auth/seller_register.html')
-
-
 
 
 def seller_products(request):

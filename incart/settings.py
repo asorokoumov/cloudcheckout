@@ -123,3 +123,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = "/Users/anton.sorokoumov/antiwork/projects/incart/"
+
+#email
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "sorokoumov.anton@gmail.com"
+EMAIL_HOST_PASSWORD = 'pzfrfmmxexsvvlls'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
