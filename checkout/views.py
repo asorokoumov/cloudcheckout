@@ -12,9 +12,8 @@ from django.core.mail import EmailMessage
 
 # Create your views here.
 
-def checkout_product(request, product_link, seller_name):
-    seller = Seller.objects.get(instagram=seller_name)
-    product = Product.objects.get(link=product_link, seller=seller)
+def checkout_product(request, product_link):
+    product = Product.objects.get(link=product_link)
     if request.method == "POST":
         checkout_form = ProductForm(request.POST)
         if checkout_form.is_valid():
