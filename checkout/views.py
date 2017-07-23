@@ -42,7 +42,10 @@ def checkout_contacts(request, order_nr):
             order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
             order.customer = customer
             order.save()
-            return redirect('checkout_production', order_nr=order.order_nr)
+            if order.product.development == '0':
+                return redirect('checkout_delivery', order_nr=order.order_nr)
+            else:
+                return redirect('checkout_production', order_nr=order.order_nr)
 
     else:
         form = ContactsForm()
