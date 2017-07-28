@@ -173,7 +173,7 @@ def seller_products_edit(request, product_link):
             description = request.POST.get('description', '')
             price = request.POST.get('price', '')
             link = request.POST.get('link', '')
-            development = request.POST.get('development', '')
+            development = '0'
 
             product = Product.objects.get(link=link)
 
@@ -214,7 +214,7 @@ def seller_products_add(request):
             description = request.POST.get('description', '')
             price = request.POST.get('price', '')
             link = request.POST.get('link', '')
-            development = request.POST.get('development', '')
+            development = '0'
             file = request.FILES['image-file']
             extension = file.name.split(".")[-1].lower()
             seller = Seller.objects.get(login=auth.get_user(request).username)
