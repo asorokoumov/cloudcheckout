@@ -8,6 +8,8 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 import random, string
 from django.core.mail import EmailMessage
+from django.core.files import File
+from django.core.files.images import ImageFile
 
 
 # Create your views here.
@@ -178,7 +180,7 @@ def seller_products_edit(request, product_link):
             product = Product.objects.get(link=link)
 
 #TODO fix case without updated image
-            if request.FILES['image-file']:
+            if u'image-file' in request.FILES:
                 file = request.FILES['image-file']
                 extension = file.name.split(".")[-1].lower()
                 file.name = link + '.' + extension
@@ -215,14 +217,22 @@ def seller_products_add(request):
             price = request.POST.get('price', '')
             link = request.POST.get('link', '')
             development = '0'
-            file = request.FILES['image-file']
-            extension = file.name.split(".")[-1].lower()
             seller = Seller.objects.get(login=auth.get_user(request).username)
-            file.name = link+'.'+extension
 
-            product = Product(seller=seller, title=title, description=description, price=price, link=link, image=file,
+            product = Product(seller=seller, title=title, description=description, price=price, link=link,
                               development=development)
             product.save()
+            if u'image-file' in request.FILES and request.FILES['image-file']:
+                file = request.FILES['image-file']
+                extension = file.name.split(".")[-1].lower()
+                file.name = link + '.' + extension
+                product.image = file
+            else:
+                product.image = ImageFile(open('checkout/static/img/no-image.jpg', "rb"))
+
+              #  product.image('product_images/no-image.jpg', File().read())
+            product.save()
+
             return redirect('seller_products')
         else:
             return render(request, 'seller/space/seller_products_add.html',
