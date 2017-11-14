@@ -229,8 +229,6 @@ def seller_products_add(request):
                 product.image = file
             else:
                 product.image = ImageFile(open('checkout/static/img/no-image.jpg', "rb"))
-
-              #  product.image('product_images/no-image.jpg', File().read())
             product.save()
 
             return redirect('seller_products')
