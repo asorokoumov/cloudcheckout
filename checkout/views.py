@@ -31,7 +31,14 @@ def checkout_product(request, product_link):
 
 
 def generate_order_nr():
-    return '123-3'
+    num_results = 1
+    order_nr = ''
+    while num_results >= 1:
+        order_nr = random.randint(1000, 99999)
+        num_results = Order.objects.filter(order_nr=order_nr).count()
+        print ("Order number" + str(order_nr) + "is already used. One more attempt to create order number")
+
+    return order_nr
 
 
 def checkout_contacts(request, order_nr):
@@ -44,10 +51,11 @@ def checkout_contacts(request, order_nr):
             order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
             order.customer = customer
             order.save()
-            if order.product.development == '0':
-                return redirect('checkout_delivery', order_nr=order.order_nr)
-            else:
-                return redirect('checkout_production', order_nr=order.order_nr)
+            return redirect('checkout_success', order_nr=order.order_nr)
+#            if order.product.development == '0':
+#                return redirect('checkout_delivery', order_nr=order.order_nr)
+#            else:
+#                return redirect('checkout_production', order_nr=order.order_nr)
 
     else:
         form = ContactsForm()
