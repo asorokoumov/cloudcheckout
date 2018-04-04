@@ -55,6 +55,7 @@ class Order(models.Model):
     delivery_service = models.ForeignKey(Delivery, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True, null=True)
     delivery_comments = models.TextField(blank=True, null=True)
+    is_created = models.BooleanField(default=False)
 
     def __str__(self):
         return self.order_nr

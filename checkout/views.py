@@ -48,7 +48,7 @@ def checkout_contacts(request, order_nr):
             customer = form.save(commit=False)
             customer.save()
 
-            order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
+            order = Order.objects.get(order_nr=order_nr)
             order.customer = customer
             order.save()
             return redirect('checkout_success', order_nr=order.order_nr)
@@ -58,6 +58,9 @@ def checkout_contacts(request, order_nr):
 #                return redirect('checkout_production', order_nr=order.order_nr)
 
     else:
+        order = Order.objects.get(order_nr=order_nr)
+        if order.is_created:
+            return redirect('checkout_success', order_nr=order_nr)
         form = ContactsForm()
     return render(request, 'checkout/contacts.html', {'form': form})
 
@@ -67,7 +70,7 @@ def checkout_delivery(request, order_nr):
         form = ProductionForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
+            order = Order.objects.get(order_nr=order_nr)
         #   order.address = data['address']
             order.save()
             return redirect('checkout_success', order_nr=order.order_nr)
@@ -80,7 +83,7 @@ def checkout_production(request, order_nr):
     if request.method == "POST":
         form = DeliveryForm(request.POST)
         if form.is_valid():
-            order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
+            order = Order.objects.get(order_nr=order_nr)
             if 'now' in request.POST:
                 return redirect('checkout_delivery', order_nr=order.order_nr)
             elif 'later' in request.POST:
@@ -91,13 +94,16 @@ def checkout_production(request, order_nr):
 
 
 def send_order_details():
-    email = EmailMessage('Hello', 'World', to=['sorokoumov.anton@gmail.com'])
+    email = EmailMessage('New order', 'World', to=['sorokoumov.anton@gmail.com'])
     email.send()
 
 
 def checkout_success(request, order_nr):
-    order = Order.objects.filter(order_nr=order_nr).order_by('-id')[0]
-    send_order_details()
+    order = Order.objects.get(order_nr=order_nr)
+    if not order.is_created:
+        send_order_details()
+        order.is_created = True
+        order.save()
     return render(request, 'checkout/success.html', {'order': order})
 
 
