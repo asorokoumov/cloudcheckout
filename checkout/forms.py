@@ -38,5 +38,8 @@ class DeliveryForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('address',)
+        widgets = {
+            'address': Input(attrs={'class': 'input', 'placeholder': 'Адрес', 'type': 'text'}),
+        }
 
 

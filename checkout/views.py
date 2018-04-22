@@ -33,10 +33,13 @@ def checkout_product(request, product_link):
 def generate_order_nr():
     num_results = 1
     order_nr = ''
+    order_nr = random.randint(1000, 99999)
+    num_results = Order.objects.filter(order_nr=order_nr).count()
+
     while num_results >= 1:
+        print ("Order number" + str(order_nr) + "is already used. One more attempt to create order number")
         order_nr = random.randint(1000, 99999)
         num_results = Order.objects.filter(order_nr=order_nr).count()
-        print ("Order number" + str(order_nr) + "is already used. One more attempt to create order number")
 
     return order_nr
 
@@ -51,7 +54,7 @@ def checkout_contacts(request, order_nr):
             order = Order.objects.get(order_nr=order_nr)
             order.customer = customer
             order.save()
-            return redirect('checkout_success', order_nr=order.order_nr)
+            return redirect('checkout_delivery', order_nr=order.order_nr)
 #            if order.product.development == '0':
 #                return redirect('checkout_delivery', order_nr=order.order_nr)
 #            else:
@@ -67,15 +70,17 @@ def checkout_contacts(request, order_nr):
 
 def checkout_delivery(request, order_nr):
     if request.method == "POST":
-        form = ProductionForm(request.POST)
+        form = DeliveryForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
             order = Order.objects.get(order_nr=order_nr)
-        #   order.address = data['address']
+            order.address = form['address'].value()
             order.save()
             return redirect('checkout_success', order_nr=order.order_nr)
     else:
-        form = ProductionForm()
+        order = Order.objects.get(order_nr=order_nr)
+        if order.is_created:
+            return redirect('checkout_success', order_nr=order_nr)
+        form = DeliveryForm()
     return render(request, 'checkout/delivery.html', {'form': form})
 
 
@@ -89,19 +94,32 @@ def checkout_production(request, order_nr):
             elif 'later' in request.POST:
                 return redirect('checkout_success', order_nr=order.order_nr)
     else:
+        order = Order.objects.get(order_nr=order_nr)
+        if order.is_created:
+            return redirect('checkout_success', order_nr=order_nr)
         form = DeliveryForm()
     return render(request, 'checkout/production.html', {'form': form})
 
 
-def send_order_details():
-    email = EmailMessage('New order', 'World', to=['sorokoumov.anton@gmail.com'])
+def send_order_details(order_nr):
+    order = Order.objects.get(order_nr=order_nr)
+    email = EmailMessage('Новый заказ ' + str(order_nr),
+                         'Товар: ' + str(order.product.title) + '\n'
+                         'Номер заказа: ' + str(order.order_nr) + '\n'
+                         'Цена: ' + str(order.product.price) + '\n'
+                         'Имя клиента: ' + str(order.customer.name) + '\n'
+                         'Email клиента: ' + str(order.customer.email) + '\n'
+                         'Телефон клиента: ' + str(order.customer.phone) + '\n'
+                         'Адрес доставки: ' + str(order.address) + '\n',
+                         to=['sorokoumov.anton@gmail.com'])
+    print (str(order.address))
     email.send()
 
 
 def checkout_success(request, order_nr):
     order = Order.objects.get(order_nr=order_nr)
     if not order.is_created:
-        send_order_details()
+        send_order_details(order_nr)
         order.is_created = True
         order.save()
     return render(request, 'checkout/success.html', {'order': order})
@@ -147,7 +165,6 @@ def seller_register(request):
                 return render(request, 'seller/auth/seller_register.html',
                               {'register_error': 'Пользователь с таким email уже существует'})
             else:
-                print('4')
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
                 Seller(login=username, email=email).save()

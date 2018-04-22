@@ -27,16 +27,15 @@
         <div class="input-wrap">
           <select id="delivery" type="email" class="select" required>
             <option value="" disabled selected hidden>Способ доставки</option>
-            <option value="courier">Курьерская доставка</option>
-            <option value="pochta">Почта России</option>
+            <option value="courier">Курьерская/Почтовая доставка</option>
             <option value="self">Самовывоз</option>
           </select>
         </div>
 
         <div class="delivery-fields  courier" style="display: none;">
           <div class="input-wrap">
-            <input type="text" class="input" placeholder="Адрес">
-          </div>
+            {{ form.address }}
+         </div>
 
           <div class="input-wrap">
             <textarea class="textarea" placeholder="Комментарий"></textarea>
@@ -45,17 +44,6 @@
           <div class="subtitle  mb20">Мы позвоним вам и уточним сроки и стоймость доставки по вашему адресу</div>
         </div>
 
-        <div class="delivery-fields  pochta" style="display: none;">
-          <div class="input-wrap">
-            <input type="text" class="input" placeholder="Адрес">
-          </div>
-
-          <div class="input-wrap">
-            <textarea class="textarea" placeholder="Комментарий"></textarea>
-          </div>
-
-          <div class="subtitle  mb20">Мы позвоним вам и уточним сроки и стоймость доставки по вашему адресу</div>
-        </div>
 
         <div class="delivery-fields  self" style="display: none;">
           <div class="summary">
