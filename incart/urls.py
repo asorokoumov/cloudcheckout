@@ -20,3 +20,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('checkout.urls')),
 ]
+
+handler404 = 'checkout.views.error404'
+handler500 = 'checkout.views.error500'

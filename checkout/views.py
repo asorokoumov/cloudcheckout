@@ -34,6 +34,14 @@ def in_development(request):
     return render(request, 'technical/in_development.html')
 
 
+def error404(request):
+    return render(request, 'technical/404.html', status=404)
+
+
+def error500(request):
+    return render(request, 'technical/500.html', status=500)
+
+
 def generate_order_nr():
     num_results = 1
     order_nr = ''
