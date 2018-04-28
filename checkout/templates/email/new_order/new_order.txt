@@ -1,0 +1,12 @@
+
+
+
+Поздравляем, у вас новый заказ!
+
+Номер заказа: {{order.order_nr}}
+Товар: {{order.product.title}}
+Цена: {{order.product.price}}
+Имя клиента: {{order.customer.name}}
+Email клиента: {{order.customer.email}}
+Телефон клиента: {{order.customer.phone}}
+Адрес доставки: {{order.address}}

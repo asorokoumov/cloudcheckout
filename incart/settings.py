@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@my9_hj#3la^f1%5msu5^vh+ik^__(o_!umb$^7oz#2d@*de^t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'localhost']
 
@@ -127,8 +127,8 @@ MEDIA_ROOT = "/Users/anton.sorokoumov/antiwork/projects/incart/"
 #email
 
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "sorokoumov.anton@gmail.com"
-EMAIL_HOST_PASSWORD = 'pzfrfmmxexsvvlls'
+EMAIL_HOST_USER = "cloudcheckout@gmail.com"
+EMAIL_HOST_PASSWORD = 'psbsgjsybsfqmyxl'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

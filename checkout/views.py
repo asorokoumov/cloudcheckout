@@ -11,6 +11,9 @@ from django.core.mail import EmailMessage
 from django.core.files import File
 from django.core.files.images import ImageFile
 
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
 
 # Create your views here.
 
@@ -49,7 +52,7 @@ def generate_order_nr():
     num_results = Order.objects.filter(order_nr=order_nr).count()
 
     while num_results >= 1:
-        print ("Order number" + str(order_nr) + "is already used. One more attempt to create order number")
+        print("Order number" + str(order_nr) + "is already used. One more attempt to create order number")
         order_nr = random.randint(1000, 99999)
         num_results = Order.objects.filter(order_nr=order_nr).count()
 
@@ -67,10 +70,10 @@ def checkout_contacts(request, order_nr):
             order.customer = customer
             order.save()
             return redirect('checkout_delivery', order_nr=order.order_nr)
-#            if order.product.development == '0':
-#                return redirect('checkout_delivery', order_nr=order.order_nr)
-#            else:
-#                return redirect('checkout_production', order_nr=order.order_nr)
+            #            if order.product.development == '0':
+            #                return redirect('checkout_delivery', order_nr=order.order_nr)
+            #            else:
+            #                return redirect('checkout_production', order_nr=order.order_nr)
 
     else:
         order = Order.objects.get(order_nr=order_nr)
@@ -115,17 +118,17 @@ def checkout_production(request, order_nr):
 
 def send_order_details(order_nr):
     order = Order.objects.get(order_nr=order_nr)
-    email = EmailMessage('Новый заказ ' + str(order_nr),
-                         'Товар: ' + str(order.product.title) + '\n'
-                         'Номер заказа: ' + str(order.order_nr) + '\n'
-                         'Цена: ' + str(order.product.price) + '\n'
-                         'Имя клиента: ' + str(order.customer.name) + '\n'
-                         'Email клиента: ' + str(order.customer.email) + '\n'
-                         'Телефон клиента: ' + str(order.customer.phone) + '\n'
-                         'Адрес доставки: ' + str(order.address) + '\n',
-                         to=['sorokoumov.anton@gmail.com'])
-    print (str(order.address))
-    email.send()
+
+    msg_plain = render_to_string('email/new_order/new_order.txt', {'order': order})
+    msg_html = render_to_string('email/new_order/new_order.html', {'order': order})
+
+    send_mail(
+        'Новый заказ #' + order_nr,
+        msg_plain,
+        'cloudcheckout@gmail.com',
+        ['sorokoumov.anton@gmail.com'],
+        html_message=msg_html,
+    )
 
 
 def checkout_success(request, order_nr):
@@ -172,7 +175,8 @@ def seller_register(request):
             email = request.POST.get('email', '')
             password = request.POST.get('password', '')
             if User.objects.filter(username=username):
-                return render(request, 'seller/auth/seller_register.html', {'register_error': 'Пользователь уже существует'})
+                return render(request, 'seller/auth/seller_register.html',
+                              {'register_error': 'Пользователь уже существует'})
             elif User.objects.filter(email=email):
                 return render(request, 'seller/auth/seller_register.html',
                               {'register_error': 'Пользователь с таким email уже существует'})
@@ -191,7 +195,7 @@ def seller_products(request):
         seller = Seller.objects.get(login=auth.get_user(request).username)
         products = Product.objects.filter(seller=seller)
         return render(request, 'seller/space/seller_products.html', {'username': auth.get_user(request).username,
-                                                                 'products': products})
+                                                                     'products': products})
     else:
         return redirect('seller_login')
 
@@ -209,7 +213,6 @@ def seller_products_delete(request, product_link):
 
 
 def seller_products_edit(request, product_link):
-
     if not auth.get_user(request).username:
         return redirect('seller_login')
     else:
@@ -222,7 +225,7 @@ def seller_products_edit(request, product_link):
 
             product = Product.objects.get(link=link)
 
-#TODO fix case without updated image
+            # TODO fix case without updated image
             if u'image-file' in request.FILES:
                 file = request.FILES['image-file']
                 extension = file.name.split(".")[-1].lower()
@@ -239,15 +242,16 @@ def seller_products_edit(request, product_link):
         else:
             seller = Seller.objects.get(login=auth.get_user(request).username)
             product = Product.objects.get(seller=seller, link=product_link)
-            return render(request, 'seller/space/seller_products_edit.html', {'username': auth.get_user(request).username,
-                          'product': product})
+            return render(request, 'seller/space/seller_products_edit.html',
+                          {'username': auth.get_user(request).username,
+                           'product': product})
 
 
 def generate_product_link(username):
     size = 4
     chars = string.ascii_lowercase + string.digits
     seller = Seller.objects.get(login=username)
-    return str(seller.id)+''.join(random.choice(chars) for _ in range(size))
+    return str(seller.id) + ''.join(random.choice(chars) for _ in range(size))
 
 
 def seller_products_add(request):
@@ -279,5 +283,3 @@ def seller_products_add(request):
             return render(request, 'seller/space/seller_products_add.html',
                           {'username': auth.get_user(request).username,
                            'link': generate_product_link(auth.get_user(request).username)})
-
-

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ {{order.order_nr}}</title>
+</head>
+<body>
+<style>
+  body { text-align: center; padding: 150px; }
+  h1 { font-size: 30px; }
+  body { font: 20px Helvetica, sans-serif; color: #333; }
+  article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+  a { color: #dc8100; text-decoration: none; }
+  a:hover { color: #333; text-decoration: none; }
+</style>
+
+<article>
+    <h1>Поздравляем, у вас новый заказ!</h1>
+    <div>
+		<p><ul>
+		<li><b>Номер заказа:</b> {{order.order_nr}}</li>
+		<li><b>Товар:</b> {{order.product.title}}</li>
+		<li><b>Цена:</b> {{order.product.price}}</li>
+		<li><b>Имя клиента:</b> {{order.customer.name}}</li>
+		<li><b>Email клиента:</b> {{order.customer.email}}</li>
+		<li><b>Телефон клиента:</b> {{order.customer.phone}}</li>
+		<li><b>Адрес доставки:</b> {{order.address}}</li>
+		</ul></p>
+        <p>Если у вас остались какие-то вопросы, пишите нам на <a href="mailto:cloudcheckout@gmail.com">cloudcheckout@gmail.com</a>!</p>
+        <p>&mdash; Команда CloudCheckout</p>
+    </div>
+</article>
+</body>
+</html>
+
