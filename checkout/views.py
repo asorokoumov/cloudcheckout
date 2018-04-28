@@ -30,6 +30,10 @@ def checkout_product(request, product_link):
     return render(request, 'checkout/product.html', {'product': product, 'form': checkout_form})
 
 
+def in_development(request):
+    return render(request, 'technical/in_development.html')
+
+
 def generate_order_nr():
     num_results = 1
     order_nr = ''
